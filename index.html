@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -12,11 +11,12 @@
 :root{--pink:#f45ca6;--deep:#a52c70;--ink:#302044;--muted:#91869e;--line:#ffc1df;}
 *{box-sizing:border-box}
 html,body{margin:0;min-height:100%;}
-body{font-family:"Pretendard",sans-serif;color:var(--ink);background:#ffd9e9 url("love_banner.png") center top/cover fixed no-repeat;}
+body{font-family:"Pretendard",sans-serif;color:var(--ink);background:#ffd9e9 url("love_banner_new.png") center top/cover fixed no-repeat;}
 .page{width:min(1170px,calc(100% - 40px));margin:0 auto;padding:0 0 24px;}
 /* 곰돌이와 하트가 있는 새 이미지는 페이지 전체 배경으로 사용합니다. */
 .hero{height:240px;width:100vw;margin-left:calc((1170px - 100vw)/2);background:transparent;}
-.composer{height:auto;min-height:136px;margin:0 0 11px;padding:16px 30px 13px;background:rgba(255,255,255,.97);border:1.5px solid #ff9dce;border-radius:17px;box-shadow:0 3px 12px rgba(221,89,153,.12);}
+.composer{position:relative;height:auto;min-height:136px;margin:0 0 11px;padding:20px 30px 13px;background:rgba(255,255,255,.97);border:1.5px solid #ff9dce;border-radius:17px;box-shadow:0 3px 12px rgba(221,89,153,.12);}
+.composer::before{content:"♥  고백하기";position:absolute;left:26px;top:-17px;width:108px;height:34px;padding:0;background:linear-gradient(135deg,#ff79b7 0%,#f34c9e 100%);border-radius:7px;color:#fff;font-size:14px;font-weight:800;letter-spacing:-.4px;text-align:center;line-height:34px;box-shadow:0 2px 5px rgba(221,89,153,.18);z-index:2;}
 .composer-top{display:grid;grid-template-columns:105px minmax(0,275px) 175px;gap:12px;align-items:center;margin-bottom:9px;}
 .content-label{display:flex;align-items:center;margin:0;}
 .field-label{font-size:14px;font-weight:800;color:#8e245e;white-space:nowrap;}
@@ -64,7 +64,8 @@ button:disabled{opacity:.55;cursor:wait;}
 @media(max-width:700px){
  .page{width:calc(100% - 24px);}
  .hero{height:175px;margin-left:-12px;width:100vw;background:transparent;}
- .composer{padding:15px 14px;min-height:0;}
+ .composer{padding:20px 14px 15px;min-height:0;}
+ .composer::before{left:12px;top:-16px;width:104px;height:32px;padding:0;font-size:13px;line-height:32px;border-radius:7px;}
  .composer-top{grid-template-columns:105px minmax(0,1fr);gap:7px;margin-bottom:9px;}
  #target{width:100%;}
  #postPassword{grid-column:2;width:175px;max-width:100%;}
