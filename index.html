@@ -3,168 +3,205 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>비밀스러운 고백 우체통 💌</title>
+<title>비밀스러운 고백 우체통</title>
+
+<!-- 세련된 한글 웹폰트 (Pretendard & Noto Serif KR) -->
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;600&display=swap" rel="stylesheet">
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 
 <style>
+:root {
+  --bg-page: #F8F6F2;
+  --bg-card: #FFFFFF;
+  --bg-subtle: #F3EFEA;
+  --text-primary: #22201E;
+  --text-secondary: #68635E;
+  --text-muted: #9B958E;
+  --accent: #9C4A5B;
+  --accent-hover: #823A49;
+  --accent-soft: #F7ECEE;
+  --border-light: #E8E3DC;
+  --shadow-card: 0 4px 20px rgba(34, 32, 30, 0.04);
+}
+
 * {
   box-sizing: border-box;
 }
 
 body {
   margin: 0;
-  font-family: "Malgun Gothic", Arial, sans-serif;
-  color: #63394f;
-  background: linear-gradient(135deg, #fff0f7, #ffe0ed, #fff5f9);
+  font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Malgun Gothic", sans-serif;
+  color: var(--text-primary);
+  background-color: var(--bg-page);
   min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
 }
 
 .container {
-  max-width: 850px;
-  margin: auto;
-  padding: 24px 15px;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 48px 20px 64px;
 }
 
+/* 상단 헤더 */
 .header {
   text-align: center;
-  padding: 38px 18px;
-  border: 1px solid #ffd0e3;
-  border-radius: 24px;
-  background: rgba(255,255,255,.85);
-  margin-bottom: 22px;
-  box-shadow: 0 8px 25px #d987ad22;
+  padding: 44px 24px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 16px;
+  margin-bottom: 32px;
+  box-shadow: var(--shadow-card);
+}
+
+.header-eyebrow {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 12px;
 }
 
 .header h1 {
-  color: #d84f91;
-  font-size: 32px;
-  margin: 0 0 10px;
-}
-
-.header p {
-  color: #a45b7c;
-  margin: 7px 0;
-}
-
-.hearts {
-  font-size: 38px;
-  margin-top: 14px;
-}
-
-.panel, .post {
-  background: white;
-  border: 1px solid #f5c4da;
-  border-radius: 18px;
-  padding: 20px;
-  margin-bottom: 17px;
-  box-shadow: 0 5px 18px #e9a9c626;
-}
-
-h2 {
-  font-size: 20px;
-  color: #c34f88;
+  font-family: "Noto Serif KR", serif;
+  color: var(--text-primary);
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
   margin: 0 0 14px;
 }
 
-label {
-  display: block;
-  font-weight: bold;
-  color: #b64d80;
-  margin: 12px 0 7px;
+.header p {
+  color: var(--text-secondary);
+  font-size: 14.5px;
+  line-height: 1.65;
+  margin: 4px 0;
 }
 
-input, textarea {
-  width: 100%;
-  padding: 13px;
-  border: 1px solid #edbad1;
-  border-radius: 10px;
-  font: inherit;
-  background: #fffafd;
-  color: #63394f;
+/* 섹션 구분 타이틀 */
+.section-divider {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 4px 16px;
 }
 
-textarea {
-  height: 115px;
-  resize: vertical;
+.section-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  letter-spacing: 0.02em;
 }
 
-button {
-  background: #ed6ca6;
-  color: white;
-  border: 0;
-  border-radius: 10px;
-  padding: 12px 18px;
-  font-weight: bold;
-  font-size: 15px;
-  cursor: pointer;
+/* 카드 공통 (게시글 & 작성 폼) */
+.panel, .post {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 14px;
+  padding: 28px;
+  margin-bottom: 18px;
+  box-shadow: var(--shadow-card);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-button:hover {
-  background: #d94f91;
+.post:hover {
+  box-shadow: 0 8px 28px rgba(34, 32, 30, 0.06);
 }
 
-button:disabled {
-  opacity: .6;
-  cursor: wait;
-}
-
-.submit {
-  width: 100%;
-  margin-top: 14px;
-}
-
-.note {
-  font-size: 12px;
-  line-height: 1.6;
-  color: #98788a;
-  margin: 10px 0 0;
-}
-
+/* 게시글 카드 내부 */
 .post-head {
   display: flex;
   justify-content: space-between;
-  gap: 10px;
   align-items: center;
-  flex-wrap: wrap;
+  gap: 12px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border-light);
 }
 
-.target {
-  font-weight: bold;
-  color: #c34f88;
-  font-size: 17px;
+.target-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--accent);
+  background: var(--accent-soft);
+  padding: 5px 12px;
+  border-radius: 999px;
+}
+
+.target-badge span {
+  font-weight: 400;
+  font-size: 12px;
+  opacity: 0.85;
+}
+
+.date {
+  font-size: 12.5px;
+  color: var(--text-muted);
 }
 
 .post-content {
   white-space: pre-wrap;
-  line-height: 1.75;
-  margin: 12px 0 16px;
+  font-size: 15.5px;
+  line-height: 1.8;
+  color: var(--text-primary);
+  margin: 20px 0 24px;
+  word-break: keep-all;
 }
 
-.date {
-  font-size: 12px;
-  color: #a58d9a;
-}
-
+/* 댓글 영역 */
 .comment-area {
-  border-top: 1px dashed #efc4d8;
-  padding-top: 10px;
+  background: var(--bg-page);
+  border-radius: 10px;
+  padding: 18px;
+}
+
+.comment-header {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 12px;
+  display: block;
 }
 
 .comment {
-  background: #fff1f7;
-  border-radius: 9px;
-  padding: 10px;
-  margin: 7px 0;
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  padding: 12px 14px;
+  margin-bottom: 8px;
+  font-size: 14px;
+  line-height: 1.6;
   white-space: pre-wrap;
-  line-height: 1.5;
+}
+
+.comment-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
 }
 
 .comment-author {
-  font-weight: bold;
-  color: #bd5a8b;
+  font-weight: 600;
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+
+.comment-date {
+  font-size: 11.5px;
+  color: var(--text-muted);
+}
+
+.comment-empty {
   font-size: 13px;
-  margin-bottom: 4px;
+  color: var(--text-muted);
+  margin: 4px 0 12px;
 }
 
 .comment-form {
@@ -176,42 +213,160 @@ button:disabled {
 .comment-form input {
   flex: 1;
   min-width: 0;
+  padding: 10px 14px;
+  font-size: 13.5px;
+  background: var(--bg-card);
+}
+
+.comment-form button {
+  padding: 10px 16px;
+  font-size: 13.5px;
+  white-space: nowrap;
+}
+
+/* 작성 폼 영역 */
+.panel {
+  margin-top: 36px;
+}
+
+.panel h2 {
+  font-family: "Noto Serif KR", serif;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0 0 6px;
+}
+
+.panel-sub {
+  font-size: 13.5px;
+  color: var(--text-secondary);
+  margin: 0 0 22px;
+}
+
+label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 16px 0 8px;
+}
+
+input, textarea {
+  width: 100%;
+  padding: 13px 15px;
+  border: 1px solid var(--border-light);
+  border-radius: 10px;
+  font: inherit;
+  font-size: 14.5px;
+  background: var(--bg-page);
+  color: var(--text-primary);
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+input::placeholder, textarea::placeholder {
+  color: var(--text-muted);
+}
+
+input:focus, textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  background: var(--bg-card);
+}
+
+textarea {
+  height: 130px;
+  resize: vertical;
+  line-height: 1.65;
+}
+
+button {
+  background: var(--accent);
+  color: #FFFFFF;
+  border: 0;
+  border-radius: 10px;
+  padding: 13px 20px;
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 14.5px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+button:hover {
+  background: var(--accent-hover);
+}
+
+button:disabled {
+  opacity: 0.55;
+  cursor: wait;
+}
+
+.submit {
+  width: 100%;
+  margin-top: 20px;
+  padding: 15px;
+  font-size: 15px;
+}
+
+.note {
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: var(--text-muted);
+  margin: 14px 0 0;
+  text-align: center;
+}
+
+.status {
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--accent);
+  margin-top: 12px;
+  text-align: center;
+  min-height: 20px;
 }
 
 .empty {
   text-align: center;
-  padding: 25px;
-  color: #a77791;
+  padding: 48px 20px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 14px;
+  color: var(--text-muted);
+  font-size: 14.5px;
+  line-height: 1.6;
 }
 
 .footer {
   text-align: center;
-  color: #bd5b8d;
-  padding: 20px 10px;
-}
-
-.status {
+  color: var(--text-muted);
   font-size: 13px;
-  color: #b34d80;
-  margin-top: 9px;
-  min-height: 18px;
+  padding: 32px 10px 0;
+  letter-spacing: -0.01em;
 }
 
-@media(max-width:560px) {
+@media (max-width: 560px) {
   .container {
-    padding: 15px 11px;
+    padding: 24px 14px 48px;
+  }
+
+  .header {
+    padding: 32px 18px;
+  }
+
+  .header h1 {
+    font-size: 24px;
   }
 
   .panel, .post {
-    padding: 16px;
+    padding: 20px;
   }
 
   .comment-form {
-    flex-wrap: wrap;
+    flex-direction: column;
   }
 
-  .comment-form input {
-    flex-basis: 100%;
+  .comment-form button {
+    width: 100%;
   }
 }
 </style>
@@ -223,51 +378,43 @@ button:disabled {
 
   <!-- 게시판 상단 -->
   <header class="header">
-
-    <h1>💌 비밀스러운 고백 우체통</h1>
-
-    <p>마음속에 담아두었던 이야기를 살며시 전해보세요.</p>
-
-    <p>누구의 고백인지 알 수 없는 설레는 익명 공간 💗</p>
-
-    <div class="hearts">💕 🧸 💕</div>
-
+    <span class="header-eyebrow">Secret Mailbox</span>
+    <h1>비밀스러운 고백 우체통</h1>
+    <p>마음속에 오래 담아두었던 진심을 조용히 건네보세요.</p>
+    <p>보내는 이의 흔적 없이 오직 마음만 전달되는 익명 공간입니다.</p>
   </header>
 
+  <!-- 고백 목록 -->
+  <div class="section-divider">
+    <span class="section-title">전달된 마음들</span>
+  </div>
 
-  <!-- 고백 목록: 글쓰기보다 위에 배치 -->
   <section id="postList" aria-live="polite">
-
     <div class="empty">
-      고백을 불러오는 중입니다 💗
+      우체통을 열어보는 중입니다...
     </div>
-
   </section>
-
 
   <!-- 고백 작성 -->
   <section class="panel">
-
-    <h2>💗 익명으로 고백하기</h2>
+    <h2>익명으로 마음 전하기</h2>
+    <p class="panel-sub">작성자의 어떠한 정보도 기록되거나 공개되지 않습니다.</p>
 
     <form id="confessionForm">
-
-      <label for="target">상대방 닉네임</label>
-
+      <label for="target">받는 사람</label>
       <input
         id="target"
         type="text"
         maxlength="40"
-        placeholder="고백하고 싶은 상대방 닉네임"
+        placeholder="마음을 전하고 싶은 상대방의 닉네임"
         required
       >
 
-      <label for="content">고백 내용</label>
-
+      <label for="content">전하고 싶은 이야기</label>
       <textarea
         id="content"
         maxlength="1500"
-        placeholder="전하고 싶은 마음을 적어주세요 💕"
+        placeholder="평소 건네지 못했던 진심을 차분히 적어보세요."
         required
       ></textarea>
 
@@ -276,7 +423,7 @@ button:disabled {
         id="submitButton"
         type="submit"
       >
-        💌 익명으로 등록하기
+        우체통에 편지 넣기
       </button>
 
       <div
@@ -284,26 +431,20 @@ button:disabled {
         id="formStatus"
         aria-live="polite"
       ></div>
-
     </form>
 
     <p class="note">
-      상대방 닉네임과 고백 내용은 모든 회원에게 공개됩니다.
-      작성자 이름은 입력받거나 게시판에 표시하지 않습니다.
+      등록된 닉네임과 내용은 게시판에 공개되며, 작성자 정보는 수집하지 않습니다.
     </p>
-
   </section>
 
-
   <footer class="footer">
-    💕 좋은 마음이 모여 행복한 모임이 되길 바라요 💕
+    서로의 진심이 모여 따뜻한 인연이 되기를 바랍니다.
   </footer>
 
 </main>
 
-
 <script>
-
 // ===================================
 // 1. Supabase 연결 설정
 // ===================================
@@ -314,12 +455,10 @@ const SUPABASE_URL =
 const SUPABASE_ANON_KEY =
 "sb_publishable_E0GSkkS2vp-oknFC9nfvAg_Ky-JhpBH";
 
-
 const configured =
   SUPABASE_URL.startsWith("https://") &&
   !SUPABASE_URL.includes("여기에_") &&
   !SUPABASE_ANON_KEY.includes("여기에_");
-
 
 const db = configured
   ? window.supabase.createClient(
@@ -328,20 +467,14 @@ const db = configured
     )
   : null;
 
-
-const postList =
-  document.getElementById("postList");
-
-const formStatus =
-  document.getElementById("formStatus");
-
+const postList = document.getElementById("postList");
+const formStatus = document.getElementById("formStatus");
 
 // ===================================
 // 2. HTML 보안 처리
 // ===================================
 
 function escapeHTML(value) {
-
   return String(value ?? "").replace(
     /[&<>"']/g,
     char => ({
@@ -352,24 +485,19 @@ function escapeHTML(value) {
       "'": "&#39;"
     }[char])
   );
-
 }
 
-
 function formatDate(value) {
-
   return new Date(value).toLocaleString(
     "ko-KR",
     {
-      month: "numeric",
+      month: "long",
       day: "numeric",
       hour: "2-digit",
       minute: "2-digit"
     }
   );
-
 }
-
 
 // ===================================
 // 3. 고백글 등록
@@ -378,35 +506,22 @@ function formatDate(value) {
 document
 .getElementById("confessionForm")
 .addEventListener("submit", async function(event) {
-
   event.preventDefault();
 
   if (!db) {
-
     formStatus.textContent =
       "먼저 Supabase URL과 공개 키를 설정해 주세요.";
-
     return;
-
   }
 
-  const target =
-    document.getElementById("target").value.trim();
-
-  const content =
-    document.getElementById("content").value.trim();
+  const target = document.getElementById("target").value.trim();
+  const content = document.getElementById("content").value.trim();
 
   if (!target || !content) return;
 
-  const button =
-    document.getElementById("submitButton");
-
+  const button = document.getElementById("submitButton");
   button.disabled = true;
-
-  formStatus.textContent = "등록 중입니다...";
-
-
-  // 작성자 정보는 저장하지 않음
+  formStatus.textContent = "편지를 전달하고 있습니다...";
 
   const { error } = await db
     .from("confessions")
@@ -415,288 +530,173 @@ document
       content: content
     });
 
-
   button.disabled = false;
 
-
   if (error) {
-
     formStatus.textContent =
-      "등록에 실패했습니다. 다시 시도해 주세요.";
-
+      "등록에 실패했습니다. 잠시 후 다시 시도해 주세요.";
     return;
-
   }
 
-
   this.reset();
-
   formStatus.textContent =
-    "고백이 익명으로 등록되었습니다 💗";
+    "마음이 안전하게 전달되었습니다.";
 
   await loadPosts();
-
 });
-
 
 // ===================================
 // 4. 전체 고백글 불러오기
 // ===================================
 
 async function loadPosts() {
-
   if (!db) {
-
     postList.innerHTML = `
       <div class="empty">
         Supabase 연결 정보가 아직 입력되지 않았습니다.<br>
-        HTML 소스 위쪽의 URL과 공개 키를 설정해 주세요. 🌷
+        HTML 소스 위쪽의 URL과 공개 키를 설정해 주세요.
       </div>
     `;
-
     return;
-
   }
-
 
   const { data: posts, error } = await db
     .from("confessions")
-    .select(
-      "id,target_nickname,content,created_at"
-    )
-    .order("created_at", {
-      ascending: false
-    })
+    .select("id,target_nickname,content,created_at")
+    .order("created_at", { ascending: false })
     .limit(100);
 
-
   if (error) {
-
     postList.innerHTML = `
       <div class="empty">
         게시글을 불러오지 못했습니다.
       </div>
     `;
-
     return;
-
   }
-
 
   if (!posts || posts.length === 0) {
-
     postList.innerHTML = `
       <div class="empty">
-        아직 등록된 고백이 없어요.
-        첫 번째 고백을 남겨주세요 💕
+        아직 도착한 편지가 없습니다.<br>
+        첫 번째 이야기를 남겨보세요.
       </div>
     `;
-
     return;
-
   }
 
-
   // 댓글 불러오기
-
   const { data: comments } = await db
     .from("confession_comments")
-    .select(
-      "id,confession_id,content,created_at"
-    )
+    .select("id,confession_id,content,created_at")
     .in(
       "confession_id",
       posts.map(post => post.id)
     )
-    .order("created_at", {
-      ascending: true
-    });
-
+    .order("created_at", { ascending: true });
 
   const safeComments = comments || [];
 
-
   postList.innerHTML = posts.map(post => {
-
-    const postComments =
-      safeComments.filter(
-        comment =>
-          comment.confession_id === post.id
-      );
-
+    const postComments = safeComments.filter(
+      comment => comment.confession_id === post.id
+    );
 
     return `
-
       <article class="post">
-
         <div class="post-head">
-
-          <span class="target">
-            💗 상대방 : ${escapeHTML(post.target_nickname)}
+          <span class="target-badge">
+            <span>To.</span> ${escapeHTML(post.target_nickname)}
           </span>
-
           <span class="date">
             ${formatDate(post.created_at)}
           </span>
-
         </div>
 
-
-        <!-- 익명 안내 문구 삭제 -->
-
-        <div class="post-content">
-          ${escapeHTML(post.content)}
-        </div>
-
+        <div class="post-content">${escapeHTML(post.content)}</div>
 
         <div class="comment-area">
-
-          <strong>💬 익명 댓글</strong>
+          <span class="comment-header">답장 및 댓글 (${postComments.length})</span>
 
           <div id="comments-${post.id}">
-
             ${
               postComments.length
-
               ? postComments.map(comment => `
-
                 <div class="comment">
-
-                  <div class="comment-author">
-                    익명
+                  <div class="comment-top">
+                    <span class="comment-author">익명</span>
+                    <span class="comment-date">${formatDate(comment.created_at)}</span>
                   </div>
-
-                  ${escapeHTML(comment.content)}
-
-                  <div class="date">
-                    ${formatDate(comment.created_at)}
-                  </div>
-
+                  <div>${escapeHTML(comment.content)}</div>
                 </div>
-
               `).join("")
-
               : `
-                <div class="note">
-                  아직 댓글이 없어요.
-                  첫 댓글을 남겨보세요.
+                <div class="comment-empty">
+                  아직 남겨진 답장이 없습니다.
                 </div>
               `
             }
-
           </div>
 
-
-          <!-- 익명 댓글 작성 -->
-
-          <form
-            class="comment-form"
-            data-post-id="${post.id}"
-          >
-
+          <form class="comment-form" data-post-id="${post.id}">
             <input
               name="comment"
               maxlength="500"
-              placeholder="익명 댓글을 남겨보세요 💕"
+              placeholder="따뜻한 답장을 남겨보세요"
               required
             >
-
-            <button type="submit">
-              댓글 등록
-            </button>
-
+            <button type="submit">등록</button>
           </form>
-
         </div>
-
       </article>
-
     `;
-
   }).join("");
-
-
-  // 댓글 등록 이벤트 연결
 
   document
     .querySelectorAll(".comment-form")
     .forEach(form => {
-
-      form.addEventListener(
-        "submit",
-        addComment
-      );
-
+      form.addEventListener("submit", addComment);
     });
-
 }
-
 
 // ===================================
 // 5. 익명 댓글 등록
 // ===================================
 
 async function addComment(event) {
-
   event.preventDefault();
-
   if (!db) return;
 
-
   const form = event.currentTarget;
-
   const postId = form.dataset.postId;
-
-  const content =
-    form.elements.comment.value.trim();
-
-  const button =
-    form.querySelector("button");
-
+  const content = form.elements.comment.value.trim();
+  const button = form.querySelector("button");
 
   if (!content) return;
-
   button.disabled = true;
-
-
-  // 댓글 작성자 정보 저장하지 않음
 
   const { error } = await db
     .from("confession_comments")
     .insert({
-
       confession_id: postId,
-
       content: content
-
     });
-
 
   button.disabled = false;
 
-
   if (error) {
-
-    alert(
-      "댓글 등록에 실패했습니다. 다시 시도해 주세요."
-    );
-
+    alert("댓글 등록에 실패했습니다. 다시 시도해 주세요.");
     return;
-
   }
 
-
   await loadPosts();
-
 }
-
 
 // ===================================
 // 6. 게시판 시작
 // ===================================
 
 loadPosts();
-
 </script>
 
 </body>
