@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -6,169 +7,544 @@
 <title>비밀스러운 고백</title>
 
 <link rel="stylesheet" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;500;600&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 
 <style>
 :root {
-  --bg-page:#F8F6F2;
-  --bg-card:#FFFFFF;
-  --text-primary:#22201E;
-  --text-secondary:#68635E;
-  --text-muted:#9B958E;
-  --accent:#9C4A5B;
-  --accent-hover:#823A49;
-  --accent-soft:#F7ECEE;
-  --border-light:#E8E3DC;
-  --shadow-card:0 4px 20px rgba(34,32,30,.04);
+  --paper:#FBF9F6;
+  --ink:#302A29;
+  --sub:#817674;
+  --muted:#AAA09C;
+  --rose:#985966;
+  --rose-dark:#79434F;
+  --rose-light:#F3E9E9;
+  --line:#EAE2DE;
+  --white:#FFFFFF;
 }
-* {box-sizing:border-box}
+
+* { box-sizing:border-box; }
+
 body {
   margin:0;
-  font-family:"Pretendard",-apple-system,BlinkMacSystemFont,"Malgun Gothic",sans-serif;
-  color:var(--text-primary);
-  background:var(--bg-page);
+  background:var(--paper);
+  color:var(--ink);
+  font-family:"Pretendard",sans-serif;
   min-height:100vh;
 }
-.container {max-width:720px;margin:auto;padding:48px 20px 64px}
+
+.container {
+  max-width:760px;
+  margin:auto;
+  padding:70px 25px 55px;
+}
+
+/* 상단 */
+
 .header {
-  text-align:center;padding:44px 24px;background:white;
-  border:1px solid var(--border-light);border-radius:16px;
-  margin-bottom:32px;box-shadow:var(--shadow-card)
+  text-align:center;
+  padding:35px 15px 55px;
+  margin-bottom:35px;
+  position:relative;
 }
+
+.header::after {
+  content:"";
+  display:block;
+  width:38px;
+  height:1px;
+  background:var(--rose);
+  margin:28px auto 0;
+}
+
 .header h1 {
-  font-family:"Noto Serif KR",serif;font-size:28px;
-  margin:0 0 14px;font-weight:600
+  font-family:"Noto Serif KR",serif;
+  font-size:34px;
+  font-weight:500;
+  letter-spacing:-1.5px;
+  margin:0 0 20px;
 }
-.header p {color:var(--text-secondary);font-size:14.5px;line-height:1.65;margin:4px 0}
-.section-divider {display:flex;justify-content:space-between;margin:0 4px 16px}
-.section-title {font-size:13px;font-weight:600;color:var(--text-secondary)}
-.panel,.post {
-  background:white;border:1px solid var(--border-light);
-  border-radius:14px;padding:28px;margin-bottom:18px;
-  box-shadow:var(--shadow-card)
+
+.header p {
+  color:var(--sub);
+  font-size:14px;
+  line-height:1.9;
+  margin:3px 0;
+  letter-spacing:-.2px;
 }
-.panel {margin-top:36px}
-.panel h2 {
-  font-family:"Noto Serif KR",serif;font-size:20px;margin:0 0 6px
+
+.header .header-main {
+  color:var(--ink);
+  font-size:15px;
+  margin-bottom:5px;
 }
-.panel-sub {font-size:13.5px;color:var(--text-secondary);margin:0 0 22px}
+
+/* 게시글 */
+
+.post {
+  padding:28px 5px 30px;
+  border-bottom:1px solid var(--line);
+}
+
+.post:first-child {
+  border-top:1px solid var(--line);
+}
+
 .post-head {
-  display:flex;justify-content:space-between;align-items:center;
-  gap:12px;padding-bottom:16px;border-bottom:1px solid var(--border-light)
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  margin-bottom:22px;
 }
+
 .target-badge {
-  display:inline-flex;gap:6px;font-size:14px;font-weight:600;
-  color:var(--accent);background:var(--accent-soft);
-  padding:5px 12px;border-radius:999px
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  font-size:14px;
+  font-weight:600;
+  color:var(--rose);
 }
-.target-badge span {font-size:12px;font-weight:400}
-.date,.comment-date {font-size:12px;color:var(--text-muted)}
+
+.target-badge .to {
+  font-family:"Noto Serif KR",serif;
+  font-size:13px;
+  font-weight:400;
+  color:var(--muted);
+}
+
+.date,.comment-date {
+  color:var(--muted);
+  font-size:11px;
+  white-space:nowrap;
+}
+
 .post-content {
-  white-space:pre-wrap;font-size:15.5px;line-height:1.8;
-  margin:20px 0 24px;word-break:keep-all
+  white-space:pre-wrap;
+  font-size:15px;
+  line-height:2;
+  margin:0 0 22px;
+  word-break:keep-all;
 }
-.comment-area {background:var(--bg-page);border-radius:10px;padding:18px}
-.comment-header {font-size:12.5px;font-weight:600;color:var(--text-secondary);display:block;margin-bottom:12px}
-.comment {
-  background:white;border:1px solid var(--border-light);
-  border-radius:8px;padding:12px 14px;margin-bottom:8px;
-  font-size:14px;line-height:1.6;white-space:pre-wrap
+
+.post-actions {
+  text-align:right;
+  margin:0 0 18px;
 }
-.comment-top {display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
-.comment-author {font-weight:600;color:var(--text-secondary);font-size:12px}
-.comment-empty {font-size:13px;color:var(--text-muted);margin:4px 0 12px}
-.comment-form {display:flex;gap:8px;margin-top:12px}
-.comment-form input {flex:1;min-width:0;padding:10px 14px;font-size:13.5px}
-.comment-form button {padding:10px 16px;font-size:13.5px}
-label {display:block;font-size:13px;font-weight:600;margin:16px 0 8px}
-input,textarea {
-  width:100%;padding:13px 15px;border:1px solid var(--border-light);
-  border-radius:10px;font:inherit;font-size:14.5px;
-  background:var(--bg-page);color:var(--text-primary)
-}
-input:focus,textarea:focus {outline:none;border-color:var(--accent);background:white}
-textarea {height:130px;resize:vertical;line-height:1.65}
-button {
-  background:var(--accent);color:white;border:0;border-radius:10px;
-  padding:13px 20px;font-family:inherit;font-weight:600;
-  font-size:14px;cursor:pointer
-}
-button:hover {background:var(--accent-hover)}
-button:disabled {opacity:.55;cursor:wait}
-.submit {width:100%;margin-top:20px;padding:15px;font-size:15px}
+
 .delete-button {
-  background:transparent;color:#9B958E;border:1px solid var(--border-light);
-  padding:4px 9px;font-size:11px;border-radius:6px
+  background:transparent;
+  border:0;
+  color:#A99D99;
+  font-size:11px;
+  padding:5px 7px;
+  cursor:pointer;
 }
-.delete-button:hover {background:var(--accent-soft);color:var(--accent)}
-.comment-delete {font-size:10px;padding:3px 7px}
-.note {font-size:12.5px;line-height:1.6;color:var(--text-muted);margin:14px 0 0;text-align:center}
-.status {font-size:13.5px;color:var(--accent);margin-top:12px;text-align:center;min-height:20px}
+
+.delete-button:hover {
+  color:var(--rose);
+  background:transparent;
+}
+
+.admin-button {
+  color:var(--rose);
+}
+
+/* 댓글 */
+
+.comment-area {
+  padding:18px 0 0;
+  border-top:1px solid var(--line);
+}
+
+.comment-header {
+  display:block;
+  color:var(--sub);
+  font-size:12px;
+  font-weight:600;
+  margin-bottom:14px;
+}
+
+.comment {
+  padding:13px 0;
+  border-bottom:1px solid #F0EAE6;
+}
+
+.comment:last-child {
+  border-bottom:0;
+}
+
+.comment-top {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:7px;
+}
+
+.comment-author {
+  font-size:11px;
+  color:var(--rose);
+  font-weight:600;
+}
+
+.comment-content {
+  font-size:13.5px;
+  line-height:1.8;
+  white-space:pre-wrap;
+  word-break:break-word;
+}
+
+.comment-actions {
+  text-align:right;
+  margin-top:5px;
+}
+
+.comment-empty {
+  color:var(--muted);
+  font-size:12px;
+  padding:4px 0 12px;
+}
+
+/* 입력 영역 */
+
+.panel {
+  margin-top:65px;
+  padding:35px 0 0;
+  border-top:1px solid var(--line);
+}
+
+.panel h2 {
+  font-family:"Noto Serif KR",serif;
+  font-size:23px;
+  font-weight:500;
+  letter-spacing:-.7px;
+  margin:0 0 10px;
+}
+
+.panel-sub {
+  color:var(--sub);
+  font-size:13px;
+  margin:0 0 28px;
+  line-height:1.7;
+}
+
+.field-row {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin:20px 0 9px;
+}
+
+label {
+  font-size:13px;
+  font-weight:600;
+  color:var(--ink);
+}
+
+.field-hint {
+  font-size:11px;
+  color:var(--muted);
+  font-weight:400;
+}
+
+input,textarea {
+  width:100%;
+  border:0;
+  border-bottom:1px solid var(--line);
+  border-radius:0;
+  padding:13px 2px;
+  background:transparent;
+  color:var(--ink);
+  font:inherit;
+  font-size:14px;
+}
+
+input::placeholder,textarea::placeholder {
+  color:#B7AEAA;
+}
+
+input:focus,textarea:focus {
+  outline:none;
+  border-bottom-color:var(--rose);
+}
+
+textarea {
+  height:145px;
+  resize:vertical;
+  line-height:1.8;
+}
+
+.two-column {
+  display:grid;
+  grid-template-columns:1fr 190px;
+  gap:24px;
+}
+
+.comment-form {
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 150px auto;
+  align-items:center;
+  gap:12px;
+  margin-top:17px;
+}
+
+.comment-form input {
+  min-width:0;
+  font-size:12.5px;
+  padding:11px 2px;
+}
+
+button {
+  font-family:inherit;
+  cursor:pointer;
+}
+
+.comment-form button {
+  border:0;
+  background:transparent;
+  color:var(--rose);
+  font-size:12px;
+  font-weight:600;
+  padding:10px 3px;
+  white-space:nowrap;
+}
+
+.comment-form button:hover {
+  color:var(--rose-dark);
+}
+
+.submit {
+  display:block;
+  width:100%;
+  margin-top:30px;
+  padding:16px;
+  border:0;
+  background:var(--rose);
+  color:white;
+  font-size:14px;
+  font-weight:600;
+  letter-spacing:.5px;
+  transition:background .2s;
+}
+
+.submit:hover {
+  background:var(--rose-dark);
+}
+
+button:disabled {
+  opacity:.5;
+  cursor:wait;
+}
+
+.status {
+  color:var(--rose);
+  font-size:12px;
+  text-align:center;
+  min-height:20px;
+  margin-top:13px;
+}
+
+.note {
+  text-align:center;
+  color:var(--muted);
+  font-size:11px;
+  line-height:1.8;
+  margin:18px 0 0;
+}
+
+/* 빈 화면 */
+
 .empty {
-  text-align:center;padding:48px 20px;background:white;
-  border:1px solid var(--border-light);border-radius:14px;
-  color:var(--text-muted);font-size:14.5px;line-height:1.6
+  text-align:center;
+  padding:55px 15px;
+  color:var(--muted);
+  font-size:13px;
+  line-height:2;
 }
-.footer {text-align:center;color:var(--text-muted);font-size:13px;padding:32px 10px 0}
-@media(max-width:560px) {
-  .container {padding:24px 14px 48px}
-  .header {padding:32px 18px}
-  .header h1 {font-size:24px}
-  .panel,.post {padding:20px}
-  .comment-form {flex-direction:column}
-  .comment-form button {width:100%}
-  .post-head {align-items:flex-start}
+
+/* 하단 */
+
+.footer {
+  text-align:center;
+  padding:55px 10px 10px;
+  color:var(--muted);
+  font-family:"Noto Serif KR",serif;
+  font-size:12px;
+  line-height:1.8;
+}
+
+.admin-area {
+  margin-top:22px;
+  text-align:center;
+}
+
+.admin-login {
+  background:transparent;
+  border:0;
+  color:#B5AAA5;
+  font-size:10px;
+  padding:7px;
+}
+
+.admin-login:hover {
+  color:var(--rose);
+  background:transparent;
+}
+
+.admin-state {
+  color:var(--rose);
+  font-size:11px;
+}
+
+@media(max-width:600px) {
+  .container {
+    padding:40px 19px 40px;
+  }
+
+  .header {
+    padding:30px 5px 42px;
+  }
+
+  .header h1 {
+    font-size:28px;
+  }
+
+  .post {
+    padding:24px 2px;
+  }
+
+  .panel {
+    margin-top:48px;
+  }
+
+  .two-column {
+    grid-template-columns:1fr 135px;
+    gap:15px;
+  }
+
+  .comment-form {
+    grid-template-columns:1fr 125px;
+    gap:10px;
+  }
+
+  .comment-form button {
+    grid-column:1 / -1;
+    justify-self:end;
+  }
+}
+
+@media(max-width:380px) {
+  .two-column {
+    grid-template-columns:1fr;
+    gap:0;
+  }
+
+  .header h1 {
+    font-size:25px;
+  }
 }
 </style>
 </head>
 
 <body>
+
 <main class="container">
 
   <header class="header">
-    <h1>비밀스러운 고백 우체통</h1>
-    <p>마음속에 오래 담아두었던 진심을 조용히 건네보세요.</p>
+    <h1>비밀스러운 고백</h1>
+    <p class="header-main">마음속에 담아두었던 진심을 전해보세요.</p>
     <p>보내는 이의 흔적 없이 오직 마음만 전달되는 익명 공간입니다.</p>
   </header>
 
-  <div class="section-divider">
-    <span class="section-title">전달된 마음들</span>
-  </div>
-
+  <!-- 게시글 목록 -->
   <section id="postList" aria-live="polite">
-    <div class="empty">우체통을 열어보는 중입니다...</div>
+    <div class="empty">마음을 불러오고 있습니다...</div>
   </section>
 
+  <!-- 마음 전하기 -->
   <section class="panel">
+
     <h2>익명으로 마음 전하기</h2>
-    <p class="panel-sub">작성자 정보는 공개하지 않습니다.</p>
+    <p class="panel-sub">
+      전하지 못했던 마음을 이곳에 조용히 남겨보세요.
+    </p>
 
     <form id="confessionForm">
-      <label for="target">받는 사람</label>
-      <input id="target" type="text" maxlength="40"
-        placeholder="마음을 전하고 싶은 상대방의 닉네임" required>
 
-      <label for="content">전하고 싶은 이야기</label>
-      <textarea id="content" maxlength="1500"
-        placeholder="평소 건네지 못했던 진심을 차분히 적어보세요." required></textarea>
+      <div class="two-column">
 
-      <label for="postPassword">삭제 비밀번호</label>
-      <input id="postPassword" type="password" minlength="4"
-        maxlength="50" autocomplete="new-password"
-        placeholder="나중에 삭제할 때 사용할 비밀번호 (4자 이상)" required>
+        <div>
+          <div class="field-row">
+            <label for="target">받는 사람</label>
+          </div>
+          <input
+            id="target"
+            type="text"
+            maxlength="40"
+            placeholder="상대방 닉네임"
+            required
+          >
+        </div>
 
-      <button class="submit" id="submitButton" type="submit">마음 전하기</button>
+        <div>
+          <div class="field-row">
+            <label for="postPassword">삭제 비밀번호</label>
+            <span class="field-hint">비밀번호(4자 이상)</span>
+          </div>
+          <input
+            id="postPassword"
+            type="password"
+            minlength="4"
+            maxlength="50"
+            autocomplete="new-password"
+            placeholder="비밀번호 입력"
+            required
+          >
+        </div>
+
+      </div>
+
+      <div class="field-row">
+        <label for="content">전하고 싶은 이야기</label>
+      </div>
+
+      <textarea
+        id="content"
+        maxlength="1500"
+        placeholder="평소 건네지 못했던 진심을 차분히 적어보세요."
+        required
+      ></textarea>
+
+      <button class="submit" id="submitButton" type="submit">
+        마음 전하기
+      </button>
+
       <div class="status" id="formStatus" aria-live="polite"></div>
+
     </form>
 
     <p class="note">
-      닉네임과 고백 내용은 공개됩니다. 삭제 비밀번호는 공개되지 않으니 꼭 기억해 주세요.
+      닉네임과 고백 내용은 공개됩니다.<br>
+      삭제 비밀번호는 공개되지 않으니 꼭 기억해 주세요.
     </p>
+
   </section>
 
   <footer class="footer">
     서로의 진심이 모여 따뜻한 인연이 되기를 바랍니다.
+
+    <div class="admin-area">
+      <span id="adminState" class="admin-state"></span>
+      <button id="adminLoginButton" class="admin-login" type="button">
+        관리자 모드
+      </button>
+      <button id="adminLogoutButton" class="admin-login"
+        type="button" style="display:none">
+        관리자 모드 종료
+      </button>
+    </div>
   </footer>
 
 </main>
@@ -192,9 +568,12 @@ const db = window.supabase.createClient(
 const postList = document.getElementById("postList");
 const formStatus = document.getElementById("formStatus");
 
+let isAdmin = false;
+let adminPassword = "";
+
 
 // ===================================
-// 2. HTML 보안 처리
+// 2. 공통 함수
 // ===================================
 
 function escapeHTML(value) {
@@ -236,8 +615,9 @@ document.getElementById("confessionForm")
   }
 
   const button = document.getElementById("submitButton");
+
   button.disabled = true;
-  formStatus.textContent = "편지를 전달하고 있습니다...";
+  formStatus.textContent = "마음을 전달하고 있습니다...";
 
   try {
     const { error } = await db.rpc("create_confession", {
@@ -250,12 +630,13 @@ document.getElementById("confessionForm")
 
     this.reset();
     formStatus.textContent = "마음이 안전하게 전달되었습니다.";
+
     await loadPosts();
 
   } catch (error) {
     console.error(error);
     formStatus.textContent =
-      "등록에 실패했습니다. 잠시 후 다시 시도해 주세요.";
+      "등록에 실패했습니다. Supabase 설정을 확인해 주세요.";
   } finally {
     button.disabled = false;
   }
@@ -276,16 +657,15 @@ async function loadPosts() {
 
   if (error) {
     console.error(error);
-    postList.innerHTML = `
-      <div class="empty">게시글을 불러오지 못했습니다.</div>
-    `;
+    postList.innerHTML =
+      '<div class="empty">게시글을 불러오지 못했습니다.</div>';
     return;
   }
 
   if (!posts || posts.length === 0) {
     postList.innerHTML = `
       <div class="empty">
-        아직 도착한 편지가 없습니다.<br>
+        아직 도착한 마음이 없습니다.<br>
         첫 번째 이야기를 남겨보세요.
       </div>
     `;
@@ -300,9 +680,7 @@ async function loadPosts() {
     .in("confession_id", postIds)
     .order("created_at", { ascending:true });
 
-  if (commentError) {
-    console.error(commentError);
-  }
+  if (commentError) console.error(commentError);
 
   const safeComments = comments || [];
 
@@ -317,7 +695,7 @@ async function loadPosts() {
 
         <div class="post-head">
           <span class="target-badge">
-            <span>To.</span>
+            <span class="to">To.</span>
             ${escapeHTML(post.target_nickname)}
           </span>
 
@@ -326,12 +704,22 @@ async function loadPosts() {
 
         <div class="post-content">${escapeHTML(post.content)}</div>
 
-        <div style="text-align:right;margin-bottom:15px">
+        <div class="post-actions">
+
           <button class="delete-button"
             type="button"
             onclick="deletePost('${post.id}')">
-            게시글 삭제
+            본인 삭제
           </button>
+
+          ${isAdmin ? `
+            <button class="delete-button admin-button"
+              type="button"
+              onclick="adminDelete('post','${post.id}')">
+              관리자 삭제
+            </button>
+          ` : ""}
+
         </div>
 
         <div class="comment-area">
@@ -340,54 +728,77 @@ async function loadPosts() {
             답장 및 댓글 (${postComments.length})
           </span>
 
-          <div>
-            ${
-              postComments.length
-              ? postComments.map(comment => `
-                <div class="comment">
+          ${
+            postComments.length
+            ? postComments.map(comment => `
+              <div class="comment">
 
-                  <div class="comment-top">
-                    <span class="comment-author">익명</span>
-                    <span class="comment-date">
-                      ${formatDate(comment.created_at)}
-                    </span>
-                  </div>
+                <div class="comment-top">
+                  <span class="comment-author">익명</span>
+                  <span class="comment-date">
+                    ${formatDate(comment.created_at)}
+                  </span>
+                </div>
 
-                  <div>${escapeHTML(comment.content)}</div>
+                <div class="comment-content">
+                  ${escapeHTML(comment.content)}
+                </div>
 
-                  <div style="text-align:right;margin-top:7px">
-                    <button class="delete-button comment-delete"
+                <div class="comment-actions">
+
+                  <button class="delete-button"
+                    type="button"
+                    onclick="deleteComment('${comment.id}')">
+                    본인 삭제
+                  </button>
+
+                  ${isAdmin ? `
+                    <button class="delete-button admin-button"
                       type="button"
-                      onclick="deleteComment('${comment.id}')">
-                      삭제
+                      onclick="adminDelete('comment','${comment.id}')">
+                      관리자 삭제
                     </button>
-                  </div>
+                  ` : ""}
 
                 </div>
-              `).join("")
-              : `
-                <div class="comment-empty">
-                  아직 남겨진 답장이 없습니다.
-                </div>
-              `
-            }
-          </div>
+
+              </div>
+            `).join("")
+            : `
+              <div class="comment-empty">
+                아직 남겨진 답장이 없습니다.
+              </div>
+            `
+          }
 
           <form class="comment-form" data-post-id="${post.id}">
-            <input name="comment" maxlength="500"
-              placeholder="따뜻한 답장을 남겨보세요" required>
 
-            <input name="password" type="password"
-              minlength="4" maxlength="50"
+            <input
+              name="comment"
+              maxlength="500"
+              placeholder="따뜻한 답장을 남겨보세요"
+              required
+            >
+
+            <input
+              name="password"
+              type="password"
+              minlength="4"
+              maxlength="50"
               autocomplete="new-password"
-              placeholder="삭제 비밀번호 (4자 이상)" required>
+              placeholder="비밀번호(4자 이상)"
+              required
+            >
 
-            <button type="submit">등록</button>
+            <button type="submit">댓글 등록</button>
+
           </form>
 
         </div>
+
       </article>
     `;
+
   }).join("");
 
   document.querySelectorAll(".comment-form")
@@ -409,10 +820,11 @@ async function addComment(event) {
   const postId = form.dataset.postId;
   const content = form.elements.comment.value.trim();
   const password = form.elements.password.value;
+
   const button = form.querySelector("button");
 
   if (!content || password.length < 4) {
-    alert("댓글과 삭제 비밀번호를 입력해 주세요.");
+    alert("댓글과 비밀번호(4자 이상)를 입력해 주세요.");
     return;
   }
 
@@ -438,7 +850,7 @@ async function addComment(event) {
 
 
 // ===================================
-// 6. 게시글 삭제
+// 6. 본인 게시글 삭제
 // ===================================
 
 async function deletePost(postId) {
@@ -480,7 +892,7 @@ async function deletePost(postId) {
 
 
 // ===================================
-// 7. 댓글 삭제
+// 7. 본인 댓글 삭제
 // ===================================
 
 async function deleteComment(commentId) {
@@ -522,11 +934,129 @@ async function deleteComment(commentId) {
 
 
 // ===================================
-// 8. 게시판 시작
+// 8. 관리자 모드 로그인
+// ===================================
+
+document.getElementById("adminLoginButton")
+.addEventListener("click", async function() {
+
+  const password = prompt("관리자 비밀번호를 입력해 주세요.");
+
+  if (password === null) return;
+
+  if (!password) {
+    alert("관리자 비밀번호를 입력해 주세요.");
+    return;
+  }
+
+  try {
+    const { data, error } = await db.functions.invoke(
+      "admin-delete",
+      {
+        body: {
+          type:"verify",
+          password:password
+        }
+      }
+    );
+
+    if (error) throw error;
+
+    if (!data || !data.success) {
+      alert(data?.error || "관리자 인증에 실패했습니다.");
+      return;
+    }
+
+    isAdmin = true;
+    adminPassword = password;
+
+    document.getElementById("adminLoginButton").style.display = "none";
+    document.getElementById("adminLogoutButton").style.display = "inline-block";
+    document.getElementById("adminState").textContent = "관리자 모드 활성화";
+
+    alert("관리자 인증이 완료되었습니다.");
+
+    await loadPosts();
+
+  } catch (error) {
+    console.error(error);
+    alert("관리자 인증에 실패했습니다. Edge Function 설정을 확인해 주세요.");
+  }
+});
+
+
+// ===================================
+// 9. 관리자 모드 종료
+// ===================================
+
+document.getElementById("adminLogoutButton")
+.addEventListener("click", async function() {
+
+  isAdmin = false;
+  adminPassword = "";
+
+  document.getElementById("adminLoginButton").style.display = "inline-block";
+  document.getElementById("adminLogoutButton").style.display = "none";
+  document.getElementById("adminState").textContent = "";
+
+  await loadPosts();
+});
+
+
+// ===================================
+// 10. 관리자 게시글 및 댓글 삭제
+// ===================================
+
+async function adminDelete(type, id) {
+
+  if (!isAdmin || !adminPassword) {
+    alert("관리자 인증이 필요합니다.");
+    return;
+  }
+
+  const targetName =
+    type === "post" ? "게시글과 해당 댓글" : "댓글";
+
+  if (!confirm(
+    `관리자 권한으로 ${targetName}을(를) 삭제할까요?`
+  )) return;
+
+  try {
+    const { data, error } = await db.functions.invoke(
+      "admin-delete",
+      {
+        body: {
+          type:type,
+          id:id,
+          password:adminPassword
+        }
+      }
+    );
+
+    if (error) throw error;
+
+    if (!data || !data.success) {
+      alert(data?.error || "관리자 삭제에 실패했습니다.");
+      return;
+    }
+
+    alert("관리자 권한으로 삭제되었습니다.");
+    await loadPosts();
+
+  } catch (error) {
+    console.error(error);
+    alert("관리자 삭제에 실패했습니다. Edge Function 설정을 확인해 주세요.");
+  }
+}
+
+
+// ===================================
+// 11. 게시판 시작
 // ===================================
 
 loadPosts();
 
 </script>
+
 </body>
 </html>
